@@ -38,3 +38,5 @@ build/
 .DS_Store
 /data/
 /.gitignore
+/big-market-app/data/log/log_info.log
+/big-market-app/data/log/log_error.log
