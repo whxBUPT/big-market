@@ -12,6 +12,7 @@ import bupt.whx.infrastructure.persistent.po.StrategyAward;
 import bupt.whx.infrastructure.persistent.po.StrategyRule;
 import bupt.whx.infrastructure.persistent.redis.IRedisService;
 import bupt.whx.types.common.Constants;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
@@ -129,5 +130,14 @@ public class StrategyRepository implements IStrategyRepository {
                 .ruleDesc(strategyRuleRes.getRuleDesc())
                 .build();
 
+    }
+
+    @Override
+    public String queryStrategyRuleValue(Long strategyId, Integer awardId, String ruleModel) {
+        StrategyRule strategyRule=new StrategyRule();
+        strategyRule.setStrategyId(strategyId);
+        strategyRule.setAwardId(awardId);
+        strategyRule.setRuleModel(ruleModel);
+        return strategyRuleDao.queryStrategyRuleValue(strategyRule);
     }
 }

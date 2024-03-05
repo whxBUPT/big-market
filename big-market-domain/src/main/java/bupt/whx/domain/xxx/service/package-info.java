@@ -1,1 +1,0 @@
-package bupt.whx.domain.xxx.service;
