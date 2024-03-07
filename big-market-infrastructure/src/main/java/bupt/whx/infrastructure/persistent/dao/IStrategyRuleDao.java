@@ -1,6 +1,7 @@
 package bupt.whx.infrastructure.persistent.dao;
 
 
+import bupt.whx.infrastructure.persistent.po.StrategyAward;
 import bupt.whx.infrastructure.persistent.po.StrategyRule;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -19,4 +20,6 @@ public interface IStrategyRuleDao {
     StrategyRule queryStrategyRule(StrategyRule strategyRuleReq);
 
     String queryStrategyRuleValue(StrategyRule strategyRule);
+
+
 }

@@ -3,6 +3,7 @@ package bupt.whx.infrastructure.persistent.repository;
 import bupt.whx.domain.strategy.model.entity.StrategyAwardEntity;
 import bupt.whx.domain.strategy.model.entity.StrategyEntity;
 import bupt.whx.domain.strategy.model.entity.StrategyRuleEntity;
+import bupt.whx.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 import bupt.whx.domain.strategy.repository.IStrategyRepository;
 import bupt.whx.infrastructure.persistent.dao.IStrategyAwardDao;
 import bupt.whx.infrastructure.persistent.dao.IStrategyDao;
@@ -139,5 +140,14 @@ public class StrategyRepository implements IStrategyRepository {
         strategyRule.setAwardId(awardId);
         strategyRule.setRuleModel(ruleModel);
         return strategyRuleDao.queryStrategyRuleValue(strategyRule);
+    }
+
+    @Override
+    public StrategyAwardRuleModelVO queryStrategyAwardRuleModelVO(Long strategyId, Integer awardId) {
+        StrategyAward strategyAward = new StrategyAward();
+        strategyAward.setStrategyId(strategyId);
+        strategyAward.setAwardId(awardId);
+        String ruleModels=strategyAwardDao.queryStrategyAwardRuleModels(strategyAward);
+        return StrategyAwardRuleModelVO.builder().ruleModels(ruleModels).build();
     }
 }
