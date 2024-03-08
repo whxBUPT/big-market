@@ -1,7 +1,7 @@
 package bupt.whx.domain.strategy.model.valobj;
 
 
-import bupt.whx.domain.strategy.service.rule.factory.DefaultLogicFactory;
+import bupt.whx.domain.strategy.service.rule.filter.factory.DefaultLogicFactory;
 import bupt.whx.types.common.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

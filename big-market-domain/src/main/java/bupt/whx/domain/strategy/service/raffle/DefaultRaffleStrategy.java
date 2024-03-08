@@ -5,10 +5,10 @@ import bupt.whx.domain.strategy.model.entity.RuleActionEntity;
 import bupt.whx.domain.strategy.model.entity.RuleMatterEntity;
 import bupt.whx.domain.strategy.model.valobj.RuleLogicCheckTypeVO;
 import bupt.whx.domain.strategy.repository.IStrategyRepository;
+import bupt.whx.domain.strategy.service.AbstractRaffleStrategy;
 import bupt.whx.domain.strategy.service.armory.IStrategyDispatch;
-import bupt.whx.domain.strategy.service.rule.ILogicFilter;
-import bupt.whx.domain.strategy.service.rule.factory.DefaultLogicFactory;
-import lombok.Builder;
+import bupt.whx.domain.strategy.service.rule.filter.ILogicFilter;
+import bupt.whx.domain.strategy.service.rule.filter.factory.DefaultLogicFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-public class DefaultRaffleStrategy extends AbstractRaffleStrategy{
+public class DefaultRaffleStrategy extends AbstractRaffleStrategy {
     @Resource
     private DefaultLogicFactory logicFactory;
 

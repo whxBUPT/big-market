@@ -1,4 +1,4 @@
-package bupt.whx.domain.strategy.service.rule;
+package bupt.whx.domain.strategy.service.rule.filter;
 
 import bupt.whx.domain.strategy.model.entity.RuleActionEntity;
 import bupt.whx.domain.strategy.model.entity.RuleMatterEntity;

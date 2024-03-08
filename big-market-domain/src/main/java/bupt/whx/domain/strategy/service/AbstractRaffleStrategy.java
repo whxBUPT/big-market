@@ -1,4 +1,4 @@
-package bupt.whx.domain.strategy.service.raffle;
+package bupt.whx.domain.strategy.service;
 
 import bupt.whx.domain.strategy.model.entity.RaffleAwardEntity;
 import bupt.whx.domain.strategy.model.entity.RaffleFactorEntity;
@@ -9,7 +9,9 @@ import bupt.whx.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 import bupt.whx.domain.strategy.repository.IStrategyRepository;
 import bupt.whx.domain.strategy.service.IRaffleStrategy;
 import bupt.whx.domain.strategy.service.armory.IStrategyDispatch;
-import bupt.whx.domain.strategy.service.rule.factory.DefaultLogicFactory;
+import bupt.whx.domain.strategy.service.rule.chain.ILogicChain;
+import bupt.whx.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
+import bupt.whx.domain.strategy.service.rule.filter.factory.DefaultLogicFactory;
 import bupt.whx.types.enums.ResponseCode;
 import bupt.whx.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +33,14 @@ public abstract class AbstractRaffleStrategy implements IRaffleStrategy {
     // 策略调度服务 -> 只负责抽奖处理，通过新增接口的方式，隔离职责，不需要使用方关心或者调用抽奖的初始化
     protected IStrategyDispatch strategyDispatch;
 
+    private DefaultChainFactory defaultChainFactory;
+
+    public AbstractRaffleStrategy(IStrategyRepository repository, IStrategyDispatch strategyDispatch, DefaultChainFactory defaultChainFactory) {
+        this.repository = repository;
+        this.strategyDispatch = strategyDispatch;
+        this.defaultChainFactory = defaultChainFactory;
+    }
+
     public AbstractRaffleStrategy(IStrategyRepository repository, IStrategyDispatch strategyDispatch) {
         this.repository = repository;
         this.strategyDispatch = strategyDispatch;
@@ -45,35 +55,15 @@ public abstract class AbstractRaffleStrategy implements IRaffleStrategy {
         if(null==strategyId|| StringUtils.isBlank(userId)){
             throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(),ResponseCode.ILLEGAL_PARAMETER.getInfo());
         }
-        //2.策略查询
-        StrategyEntity strategyEntity = repository.queryStrategyEntityByStrategyId(strategyId);
-        //3.抽奖前-规则过滤
-        RuleActionEntity<RuleActionEntity.RaffleBeforeEntity> ruleActionEntity = this.doCheckRaffleBeforeLogic(RaffleFactorEntity.builder().userId(userId).strategyId(strategyId).build(), strategyEntity.ruleModels());
 
-        if (RuleLogicCheckTypeVO.TAKE_OVER.getCode().equals(ruleActionEntity.getCode())) {
-            if (DefaultLogicFactory.LogicModel.RULE_BLACKLIST.getCode().equals(ruleActionEntity.getRuleModel())) {
-                // 黑名单返回固定的奖品ID
-                return RaffleAwardEntity.builder()
-                        .awardId(ruleActionEntity.getData().getAwardId())
-                        .build();
-            } else if (DefaultLogicFactory.LogicModel.RULE_WIGHT.getCode().equals(ruleActionEntity.getRuleModel())) {
-                // 权重根据返回的信息进行抽奖
-                RuleActionEntity.RaffleBeforeEntity raffleBeforeEntity = ruleActionEntity.getData();
-                String ruleWeightValueKey = raffleBeforeEntity.getRuleWeightValueKey();
-                Integer awardId = strategyDispatch.getRandomAwardId(strategyId, ruleWeightValueKey);
-                return RaffleAwardEntity.builder()
-                        .awardId(awardId)
-                        .build();
-            }
-        }
+        //2.责任链处理抽奖
+        ILogicChain logicChain = defaultChainFactory.openLogicChain(strategyId);
+        Integer awardId = logicChain.logic(userId, strategyId);
 
-        // 4. 默认抽奖流程
-        Integer awardId = strategyDispatch.getRandomAwardId(strategyId);
-
-        // 5. 查询奖品规则「抽奖中（拿到奖品ID时，过滤规则）、抽奖后（扣减完奖品库存后过滤，抽奖中拦截和无库存则走兜底）」
+        // 3. 查询奖品规则「抽奖中（拿到奖品ID时，过滤规则）、抽奖后（扣减完奖品库存后过滤，抽奖中拦截和无库存则走兜底）」
         StrategyAwardRuleModelVO strategyAwardRuleModelVO = repository.queryStrategyAwardRuleModelVO(strategyId, awardId);
 
-        //6.抽奖中——规则过滤
+        //4.抽奖中——规则过滤
         RuleActionEntity<RuleActionEntity.RaffleCenterEntity> ruleActionCenterEntity = this.doCheckRaffleCenterLogic(RaffleFactorEntity.builder().userId(userId).strategyId(strategyId).awardId(awardId).build(),
                 strategyAwardRuleModelVO.raffleCenterRuleModelList());
 
