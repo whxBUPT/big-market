@@ -46,7 +46,7 @@ public class RaffleStrategyTest {
         log.info("测试结果：{}", strategyArmory.assembleLotteryStrategy(100003L));
 
         // 通过反射 mock 规则中的值
-        ReflectionTestUtils.setField(ruleWeightLogicChain, "userScore", 40500L);
+        ReflectionTestUtils.setField(ruleWeightLogicChain, "userScore", 0L);
         ReflectionTestUtils.setField(ruleLockLogicFilter, "userRaffleCount", 10L);
 
     }
@@ -57,7 +57,7 @@ public class RaffleStrategyTest {
     public void test_performRaffle_blacklist() {
         RaffleFactorEntity raffleFactorEntity = RaffleFactorEntity.builder()
                 .userId("whx")  // 黑名单用户 user001,user002,user003
-                .strategyId(100003L)
+                .strategyId(100001L)
                 .build();
 
         RaffleAwardEntity raffleAwardEntity = raffleStrategy.performRaffle(raffleFactorEntity);
