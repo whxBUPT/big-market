@@ -1,5 +1,7 @@
 package bupt.whx.domain.strategy.service.rule.chain;
 
+import bupt.whx.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
+
 /**
  * ClassName:ILogicChain
  * Package:bupt.whx.domain.strategy.service.rule.chain
@@ -16,7 +18,7 @@ public interface ILogicChain extends ILogicChainArmory{
      * @param strategyId
      * @return
      */
-    Integer logic(String userId,Long strategyId);
+    DefaultChainFactory.StrategyAwardVO logic(String userId, Long strategyId);
 
 
 }

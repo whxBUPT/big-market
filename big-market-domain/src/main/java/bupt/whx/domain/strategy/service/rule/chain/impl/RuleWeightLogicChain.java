@@ -3,6 +3,7 @@ package bupt.whx.domain.strategy.service.rule.chain.impl;
 import bupt.whx.domain.strategy.repository.IStrategyRepository;
 import bupt.whx.domain.strategy.service.armory.IStrategyDispatch;
 import bupt.whx.domain.strategy.service.rule.chain.AbstractLogicChain;
+import bupt.whx.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
 import bupt.whx.types.common.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -37,7 +38,7 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
      */
 
     @Override
-    public Integer logic(String userId, Long strategyId) {
+    public DefaultChainFactory.StrategyAwardVO logic(String userId, Long strategyId) {
         log.info("抽奖责任链-权重开始 userId: {} strategyId: {} ruleModel: {}", userId, strategyId, ruleModel());
 
         String ruleValue = repository.queryStrategyRuleValue(strategyId, ruleModel());
@@ -57,10 +58,14 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
                 .findFirst()
                 .orElse(null);
 
+        //4.权重抽奖
         if(null!=nextValue){
             Integer awardId = strategyDispatch.getRandomAwardId(strategyId, analyticalValueGroup.get(nextValue));
             log.info("抽奖责任链-权重接管 userId: {} strategyId: {} ruleModel: {} awardId: {}", userId, strategyId, ruleModel(), awardId);
-            return awardId;
+            return DefaultChainFactory.StrategyAwardVO.builder()
+                    .awardId(awardId)
+                    .logicModel(ruleModel())
+                    .build();
         }
 
 
@@ -73,7 +78,7 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
 
     @Override
     protected String ruleModel() {
-        return "rule_weight";
+        return DefaultChainFactory.LogicModel.RULE_WEIGHT.getCode();
     }
 
     private Map<Long, String> getAnalyticalValue(String ruleValue) {
