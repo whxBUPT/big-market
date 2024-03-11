@@ -40,3 +40,4 @@ build/
 /.gitignore
 /big-market-app/data/log/log_info.log
 /big-market-app/data/log/log_error.log
+/big-market-app/data/

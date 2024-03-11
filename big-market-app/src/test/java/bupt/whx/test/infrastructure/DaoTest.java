@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * ClassName:DaoTest
  * Package:bupt.whx.test.infrastructure
- * Description:
+ * Description:    数据库持久化单元测试
  *
  * @Author whx
  * @Create 2024/3/3 20:54
@@ -33,7 +33,7 @@ public class DaoTest {
     private IAwardDao awardDao;
     
     @Test
-    public void test(){
+    public void test_queryAwardList(){
         List<Award> awards = awardDao.queryAwardList();
 
         log.info("测试结果:{}", JSON.toJSONString(awards));
