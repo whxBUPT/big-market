@@ -16,4 +16,6 @@ public interface IStrategyDao {
 
     List<Strategy> queryStrategyList();
 
+    Strategy queryStrategyByStrategyId(Long strategyId);
+
 }
