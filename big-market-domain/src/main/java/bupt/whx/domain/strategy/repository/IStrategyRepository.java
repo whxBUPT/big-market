@@ -3,6 +3,7 @@ package bupt.whx.domain.strategy.repository;
 import bupt.whx.domain.strategy.model.entity.StrategyAwardEntity;
 import bupt.whx.domain.strategy.model.entity.StrategyEntity;
 import bupt.whx.domain.strategy.model.entity.StrategyRuleEntity;
+import bupt.whx.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -33,4 +34,6 @@ public interface IStrategyRepository {
     StrategyRuleEntity queryStrategyRule(Long strategyId, String ruleModel);
 
     String queryStrategyRuleValue(Long strategyId, Integer awardId, String ruleModel);
+
+    StrategyAwardRuleModelVO queryStrategyAwardRuleModelVO(Long strategyId, Integer awardId);
 }

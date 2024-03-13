@@ -1,7 +1,7 @@
 package bupt.whx.domain.strategy.model.entity;
 
 
-import bupt.whx.domain.strategy.model.vo.RuleLogicCheckTypeVO;
+import bupt.whx.domain.strategy.model.valobj.RuleLogicCheckTypeVO;
 import lombok.*;
 
 /**

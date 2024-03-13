@@ -1,4 +1,4 @@
-package bupt.whx.domain.strategy.model.vo;
+package bupt.whx.domain.strategy.model.valobj;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
