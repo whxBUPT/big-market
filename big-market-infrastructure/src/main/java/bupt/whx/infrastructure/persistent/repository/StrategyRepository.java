@@ -132,4 +132,13 @@ public class StrategyRepository implements IStrategyRepository {
     public int getRateRange(String key) {
         return redisService.getValue(Constants.RedisKey.STRATEGY_RATE_RANGE_KEY+key);
     }
+
+    @Override
+    public String queryStrategyRuleValue(Long strategyId, Integer awardId, String ruleModel) {
+        StrategyRule strategyRule = new StrategyRule();
+        strategyRule.setStrategyId(strategyId);
+        strategyRule.setAwardId(awardId);
+        strategyRule.setRuleModel(ruleModel);
+        return strategyRuleDao.queryStrategyRuleValue(strategyRule);
+    }
 }

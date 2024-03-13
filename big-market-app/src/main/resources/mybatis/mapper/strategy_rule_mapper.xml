@@ -26,10 +26,12 @@
         from strategy_rule
         where strategy_id = #{strategyId} and rule_model = #{ruleModel}
     </select>
-
-
-
-
+    <select id="queryStrategyRuleValue" resultType="java.lang.String" parameterType="bupt.whx.infrastructure.persistent.po.StrategyRule">
+        select strategy_rule.rule_value from strategy_rule where strategy_id=#{strategyId} and rule_model=#{ruleModel}
+        <if test="awardId!=null">
+            and award_id=#{awardId}
+        </if>
+    </select>
 
 
 </mapper>
