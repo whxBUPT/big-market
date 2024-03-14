@@ -5,7 +5,9 @@ import bupt.whx.domain.strategy.model.entity.RuleActionEntity;
 import bupt.whx.domain.strategy.model.entity.RuleMatterEntity;
 import bupt.whx.domain.strategy.model.valobj.RuleLogicCheckTypeVO;
 import bupt.whx.domain.strategy.repository.IStrategyRepository;
+import bupt.whx.domain.strategy.service.AbstractRaffleStrategy;
 import bupt.whx.domain.strategy.service.armory.IStrategyDispatch;
+import bupt.whx.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
 import bupt.whx.domain.strategy.service.rule.filter.ILogicFilter;
 import bupt.whx.domain.strategy.service.rule.filter.factory.DefaultLogicFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -29,13 +31,13 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class DefaultRaffleStrategy extends AbstractRaffleStrategy{
+public class DefaultRaffleStrategy extends AbstractRaffleStrategy {
 
     @Resource
     private DefaultLogicFactory logicFactory;
 
-    public DefaultRaffleStrategy(IStrategyRepository repository, IStrategyDispatch strategyDispatch) {
-        super(repository, strategyDispatch);
+    public DefaultRaffleStrategy(IStrategyRepository repository, IStrategyDispatch strategyDispatch, DefaultChainFactory defaultChainFactory) {
+        super(repository, strategyDispatch,defaultChainFactory);
     }
 
 
