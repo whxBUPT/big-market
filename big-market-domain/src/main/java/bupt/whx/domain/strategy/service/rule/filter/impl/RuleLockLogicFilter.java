@@ -1,12 +1,12 @@
-package bupt.whx.domain.strategy.service.rule.impl;
+package bupt.whx.domain.strategy.service.rule.filter.impl;
 
 import bupt.whx.domain.strategy.model.entity.RuleActionEntity;
 import bupt.whx.domain.strategy.model.entity.RuleMatterEntity;
 import bupt.whx.domain.strategy.model.valobj.RuleLogicCheckTypeVO;
 import bupt.whx.domain.strategy.repository.IStrategyRepository;
 import bupt.whx.domain.strategy.service.annotation.LogicStrategy;
-import bupt.whx.domain.strategy.service.rule.ILogicFilter;
-import bupt.whx.domain.strategy.service.rule.factory.DefaultLogicFactory;
+import bupt.whx.domain.strategy.service.rule.filter.ILogicFilter;
+import bupt.whx.domain.strategy.service.rule.filter.factory.DefaultLogicFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

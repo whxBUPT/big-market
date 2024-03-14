@@ -9,7 +9,7 @@ import bupt.whx.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 import bupt.whx.domain.strategy.repository.IStrategyRepository;
 import bupt.whx.domain.strategy.service.IRaffleStrategy;
 import bupt.whx.domain.strategy.service.armory.IStrategyDispatch;
-import bupt.whx.domain.strategy.service.rule.factory.DefaultLogicFactory;
+import bupt.whx.domain.strategy.service.rule.filter.factory.DefaultLogicFactory;
 import bupt.whx.types.enums.ResponseCode;
 import bupt.whx.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;

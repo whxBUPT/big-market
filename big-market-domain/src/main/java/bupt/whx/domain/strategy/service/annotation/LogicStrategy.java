@@ -2,7 +2,7 @@ package bupt.whx.domain.strategy.service.annotation;
 
 
 
-import bupt.whx.domain.strategy.service.rule.factory.DefaultLogicFactory;
+import bupt.whx.domain.strategy.service.rule.filter.factory.DefaultLogicFactory;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

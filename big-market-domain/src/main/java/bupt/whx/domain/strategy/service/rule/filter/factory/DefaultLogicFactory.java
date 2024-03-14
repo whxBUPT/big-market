@@ -1,9 +1,9 @@
-package bupt.whx.domain.strategy.service.rule.factory;
+package bupt.whx.domain.strategy.service.rule.filter.factory;
 
 
 import bupt.whx.domain.strategy.model.entity.RuleActionEntity;
 import bupt.whx.domain.strategy.service.annotation.LogicStrategy;
-import bupt.whx.domain.strategy.service.rule.ILogicFilter;
+import bupt.whx.domain.strategy.service.rule.filter.ILogicFilter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.core.annotation.AnnotationUtils;
