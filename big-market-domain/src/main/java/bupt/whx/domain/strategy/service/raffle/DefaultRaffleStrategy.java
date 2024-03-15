@@ -2,6 +2,7 @@ package bupt.whx.domain.strategy.service.raffle;
 
 import bupt.whx.domain.strategy.model.valobj.RuleTreeVO;
 import bupt.whx.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
+import bupt.whx.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 import bupt.whx.domain.strategy.repository.IStrategyRepository;
 import bupt.whx.domain.strategy.service.AbstractRaffleStrategy;
 import bupt.whx.domain.strategy.service.armory.IStrategyDispatch;
@@ -50,4 +51,15 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy {
         return treeEngine.process(userId, strategyId, awardId);
 
     }
+
+    @Override
+    public StrategyAwardStockKeyVO takeQueueValue() throws InterruptedException {
+        return repository.takeQueueValue();
+    }
+
+    @Override
+    public void updateStrategyAwardStock(Long strategyId, Integer awardId) {
+        repository.updateStrategyAwardStock(strategyId, awardId);
+    }
+
 }

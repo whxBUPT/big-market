@@ -5,6 +5,7 @@ import bupt.whx.domain.strategy.model.entity.StrategyEntity;
 import bupt.whx.domain.strategy.model.entity.StrategyRuleEntity;
 import bupt.whx.domain.strategy.model.valobj.RuleTreeVO;
 import bupt.whx.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
+import bupt.whx.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -41,4 +42,15 @@ public interface IStrategyRepository {
     StrategyAwardRuleModelVO queryStrategyAwardRuleModelVO(Long strategyId, Integer awardId);
 
     RuleTreeVO queryRuleTreeVOByTreeId(String treeLock);
+
+    void cacheStrategyAwardCount(String cacheKey, Integer awardCount);
+
+    Boolean subtractionAwardStock(String cacheKey);
+
+    void awardStockConsumeSendQueue(StrategyAwardStockKeyVO strategyAwardStockKeyVO);
+
+    StrategyAwardStockKeyVO takeQueueValue() throws InterruptedException;
+
+    void updateStrategyAwardStock(Long strategyId, Integer awardId);
+
 }
