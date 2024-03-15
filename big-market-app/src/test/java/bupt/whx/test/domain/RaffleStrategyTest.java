@@ -6,8 +6,6 @@ import bupt.whx.domain.strategy.model.entity.RaffleFactorEntity;
 import bupt.whx.domain.strategy.service.IRaffleStrategy;
 import bupt.whx.domain.strategy.service.armory.IStrategyArmory;
 import bupt.whx.domain.strategy.service.rule.chain.impl.RuleWeightLogicChain;
-import bupt.whx.domain.strategy.service.rule.filter.impl.RuleLockLogicFilter;
-
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
@@ -20,9 +18,9 @@ import org.springframework.test.util.ReflectionTestUtils;
 import javax.annotation.Resource;
 
 /**
- * @author Fuzhengwei bugstack.cn @小傅哥
+ * @author
  * @description 抽奖策略测试
- * @create 2024-01-06 13:28
+ * @create
  */
 @Slf4j
 @RunWith(SpringRunner.class)
@@ -35,26 +33,22 @@ public class RaffleStrategyTest {
     private IRaffleStrategy raffleStrategy;
     @Resource
     private RuleWeightLogicChain ruleWeightLogicChain;
-    @Resource
-    private RuleLockLogicFilter ruleLockLogicFilter;
 
     @Before
     public void setUp() {
         // 策略装配 100001、100002、100003
         log.info("测试结果：{}", strategyArmory.assembleLotteryStrategy(100001L));
-        log.info("测试结果：{}", strategyArmory.assembleLotteryStrategy(100002L));
-        log.info("测试结果：{}", strategyArmory.assembleLotteryStrategy(100003L));
+        log.info("测试结果：{}", strategyArmory.assembleLotteryStrategy(100006L));
 
         // 通过反射 mock 规则中的值
-        ReflectionTestUtils.setField(ruleWeightLogicChain, "userScore", 1000L);
-        ReflectionTestUtils.setField(ruleLockLogicFilter, "userRaffleCount", 10L);
+        ReflectionTestUtils.setField(ruleWeightLogicChain, "userScore", 4900L);
     }
 
     @Test
     public void test_performRaffle() {
         RaffleFactorEntity raffleFactorEntity = RaffleFactorEntity.builder()
-                .userId("whx")
-                .strategyId(100001L)
+                .userId("WHX")
+                .strategyId(100006L)
                 .build();
 
         RaffleAwardEntity raffleAwardEntity = raffleStrategy.performRaffle(raffleFactorEntity);
@@ -83,7 +77,7 @@ public class RaffleStrategyTest {
     @Test
     public void test_raffle_center_rule_lock(){
         RaffleFactorEntity raffleFactorEntity = RaffleFactorEntity.builder()
-                .userId("whx")
+                .userId("WHX")
                 .strategyId(100003L)
                 .build();
 

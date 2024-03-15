@@ -1,5 +1,7 @@
 package bupt.whx.test.infrastructure;
 
+import bupt.whx.domain.strategy.model.valobj.RuleTreeVO;
+import bupt.whx.domain.strategy.repository.IStrategyRepository;
 import bupt.whx.infrastructure.persistent.dao.IAwardDao;
 import bupt.whx.infrastructure.persistent.dao.IStrategyAwardDao;
 import bupt.whx.infrastructure.persistent.po.Award;
@@ -31,12 +33,21 @@ import java.util.List;
 public class DaoTest {
     @Resource
     private IAwardDao awardDao;
+
+    @Resource
+    private IStrategyRepository strategyRepository;
     
     @Test
     public void test_queryAwardList(){
         List<Award> awards = awardDao.queryAwardList();
 
         log.info("测试结果:{}", JSON.toJSONString(awards));
+    }
+
+    @Test
+    public void queryRuleTreeVOByTreeId(){
+        RuleTreeVO ruleTreeVO=strategyRepository.queryRuleTreeVOByTreeId("tree_lock");
+        log.info("测试结果:{}",JSON.toJSONString(ruleTreeVO));
     }
 
 }
