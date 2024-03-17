@@ -1,10 +1,13 @@
 package bupt.whx.domain.strategy.service.raffle;
 
+import bupt.whx.domain.strategy.model.entity.StrategyAwardEntity;
 import bupt.whx.domain.strategy.model.valobj.RuleTreeVO;
 import bupt.whx.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 import bupt.whx.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 import bupt.whx.domain.strategy.repository.IStrategyRepository;
 import bupt.whx.domain.strategy.service.AbstractRaffleStrategy;
+import bupt.whx.domain.strategy.service.IRaffleAward;
+import bupt.whx.domain.strategy.service.IRaffleStock;
 import bupt.whx.domain.strategy.service.armory.IStrategyDispatch;
 import bupt.whx.domain.strategy.service.rule.chain.ILogicChain;
 import bupt.whx.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
@@ -12,6 +15,8 @@ import bupt.whx.domain.strategy.service.rule.tree.factory.DefaultTreeFactory;
 import bupt.whx.domain.strategy.service.rule.tree.factory.engine.IDecisionTreeEngine;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * ClassName:DefaultRaffleStrategy
@@ -24,7 +29,7 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
-public class DefaultRaffleStrategy extends AbstractRaffleStrategy {
+public class DefaultRaffleStrategy extends AbstractRaffleStrategy implements IRaffleAward, IRaffleStock {
 
     public DefaultRaffleStrategy(IStrategyRepository repository, IStrategyDispatch strategyDispatch, DefaultChainFactory defaultChainFactory, DefaultTreeFactory defaultTreeFactory) {
         super(repository, strategyDispatch, defaultChainFactory, defaultTreeFactory);
@@ -62,4 +67,8 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy {
         repository.updateStrategyAwardStock(strategyId, awardId);
     }
 
+    @Override
+    public List<StrategyAwardEntity> queryRaffleStrategyAwardList(Long strategyId) {
+        return repository.queryStrategyAwardList(strategyId);
+    }
 }
